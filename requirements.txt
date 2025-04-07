@@ -1,0 +1,7 @@
+pymupdf
+unstructured[docx,pptx,image,pdf]
+pdfminer
+pdfminer.six
+pillow-heif
+tesseract
+python-dotenv
