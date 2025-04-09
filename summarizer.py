@@ -53,11 +53,15 @@ def summarize_json_file(file_path: str) -> None:
         data = json.load(file)
 
         for entry in tqdm(data):
-            input_text = entry.get("clean_content", "")
-            if input_text.strip():
-                response = chain.invoke({"input_text": input_text})
-                entry["summarized"] = response.summary
-            else:
+            try:
+                input_text = entry.get("clean_content", "")
+                if input_text.strip():
+                    response = chain.invoke({"input_text": input_text})
+                    entry["summarized"] = response.summary
+                else:
+                    entry["summarized"] = "No substantive content available to summarize."
+            except Exception as e:
+                print("Error", e)
                 entry["summarized"] = "No substantive content available to summarize."
 
         file.seek(0)
@@ -69,8 +73,8 @@ def summarize_json_file(file_path: str) -> None:
 dataset_path = "dataset/json"
 datasets = [os.path.join(dataset_path, i) for i in os.listdir(dataset_path) if i.endswith(".json")]
 
-# for data in tqdm(datasets):
-#     summarize_json_file(data)
+for data in tqdm(datasets):
+    summarize_json_file(data)
 
 # summarize_json_file("dataset/json/sbi_2024.json")
-summarize_json_file("dataset/json/HDFC_2024.json")
+# summarize_json_file("dataset/json/HDFC_2024.json")
