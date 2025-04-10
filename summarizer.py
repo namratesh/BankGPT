@@ -69,7 +69,18 @@ def summarize_json_file(file_path: str) -> None:
         file.truncate()
         
         
-
+def merge_in_single_json(dataset_path = "dataset/json"):
+    
+    datasets = [os.path.join(dataset_path, i) for i in os.listdir(dataset_path) if i.endswith(".json")]
+    all_chunks = []
+    for fpath in datasets:
+        with open(fpath) as f:
+            all_chunks.extend(json.load(f))
+    with open("all_in_one.json", "w") as out_file:
+        json.dump(all_chunks, out_file, indent=2)
+        
+        
+        
 dataset_path = "dataset/json"
 datasets = [os.path.join(dataset_path, i) for i in os.listdir(dataset_path) if i.endswith(".json")]
 
