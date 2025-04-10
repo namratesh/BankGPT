@@ -5,3 +5,5 @@ pdfminer.six
 pillow-heif
 tesseract
 python-dotenv
+pinecone
+sentence-transformers
